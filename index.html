@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parkinson's Appointment Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f7f7f7;
+    }
+    h1 {
+      text-align: center;
+      color: #2d2d2d;
+    }
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    select, input[type="text"], textarea, input[type="submit"], button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"], button {
+      background-color: #2a7ae2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover, button:hover {
+      background-color: #1d5dbf;
+    }
+    .footer-message {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+    }
+    .print-buttons {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+  <script>
+    function showMedicationInputs(selectElement) {
+      const container = document.getElementById("medication-inputs");
+      container.innerHTML = "";
+      Array.from(selectElement.selectedOptions).forEach(option => {
+        const medication = option.value;
+        if (medication !== "other") {
+          const label = document.createElement("label");
+          label.textContent = `Dose and frequency for ${option.text}`;
+
+          const doseInput = document.createElement("input");
+          doseInput.type = "text";
+          doseInput.name = `dose_${medication}`;
+          doseInput.placeholder = "Dosage (e.g. 25/100 mg)";
+
+          const freqInput = document.createElement("input");
+          freqInput.type = "text";
+          freqInput.name = `frequency_${medication}`;
+          freqInput.placeholder = "Frequency (e.g. 3x per day)";
+
+          container.appendChild(label);
+          container.appendChild(doseInput);
+          container.appendChild(freqInput);
+        }
+      });
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('print-options').style.display = 'block';
+    }
+
+    function printCopies() {
+      window.print();
+    }
+  </script>
+</head>
+<body>
+  <h1>Parkinsonz.org - Doctor's Appointment Form</h1>
+  <form id="form" onsubmit="handleSubmit(event)">
+    <label for="notes">Additional notes or questions for your doctor:</label>
+    <textarea name="notes" id="notes" rows="5" placeholder="Enter any other information you would like your doctor to know..."></textarea>
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="print-options" class="print-buttons">
+    <p>Thank you! Please print 2 copies of this form — one for yourself and one for your doctor.</p>
+    <button onclick="printCopies()">Print Two Copies</button>
+  </div>
+
+  <div class="footer-message">
+    <p>Thank you for your help. Please send any feedback—positive or negative—and any suggested revisions to <strong>Sara Whittingham, MD</strong> at <a href="mailto:parkinsonzexercise@gmail.com">parkinsonzexercise@gmail.com</a>.</p>
+  </div>
+</body>
+</html>
